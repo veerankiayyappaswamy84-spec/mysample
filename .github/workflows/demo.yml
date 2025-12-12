@@ -7,7 +7,32 @@ on:
       - master
 jobs:
   build:
+    runs-on: ubuntu-latest---
+name: Build NodeJS Application
+on:
+  workflow_dispatch: null
+  push:
+    branches:
+      - master
+jobs:
+  build:
     runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+      - name: Build code
+        run: npm run build
+      - name: Deploy the code
+        run: echo "Deploying application..."
+
     steps:
       - name: Clone the repository
         uses: actions/checkout@v4
