@@ -1,29 +1,26 @@
 ---
-name: build nodejs application
-on: 
- workflow_dispatch:    
- push:               
+name: Build NodeJS Application
+on:
+  workflow_dispatch: null
+  push:
     branches:
-        - master            
+      - master
 jobs:
-  job1:
-   runs-on: ubuntu-latest
-   steps: 
-      - name: clone the repository
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository
         uses: actions/checkout@v4
-      - name: Install nodejs
+      - name: Install Node.js
         uses: actions/setup-node@v4
-        with: 
-         node-version: 18
-         cache: 'npm'
-      - run: npm ci
-      - run: npm test
-      - name: Install dependencies 
+        with:
+          node-version: 18
+          cache: npm
+      - name: Install dependencies
         run: npm ci
-      # to run the test cases:
-      - name: Executes the test cases
+      - name: Run tests
         run: npm test
       - name: Build code
         run: npm run build
       - name: Deploy the code
-        run: echo "Deploy the code"
+        run: echo "Deploying the code..."
