@@ -1,0 +1,41 @@
+---
+name: workflow variables
+on: push
+env:
+  PYTHON_VERSION: 3.1
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Setup Python (workflow-level env)
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+  job2:
+    runs-on: ubuntu-latest
+    env:
+      MYJOB_PYTHON_VERSION: 3.8
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Setup Python (job-level env)
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.MYJOB_PYTHON_VERSION }}
+  job3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Setup Python (step-level env)
+        uses: actions/setup-python@v5
+        env:
+          MYSTEP_PYTHON_VERSION: 3.11
+        with:
+          python-version: ${{ env.MYSTEP_PYTHON_VERSION }}
+      - name: Run command from repo variable
+        env:
+          MYCMD: ${{ vars.PYTHONCMD }}
+        run: $MYCMD
